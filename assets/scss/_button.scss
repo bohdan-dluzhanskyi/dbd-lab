@@ -1,0 +1,64 @@
+/* Базовые стили для всех типов кнопок */
+.c-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.c-btn--filled {
+    background-color: #00c4c4;
+    color: #ffffff;
+}
+
+.c-btn--filled:hover {
+    background-color: #00AFAF;
+}
+
+.c-btn--outlined {
+    background-color: transparent;
+    border-color: #00c4c4;
+    color: inherit;
+}
+
+.c-btn--outlined:hover {
+    border-color: #00afaf;
+}
+
+.c-btn--text {
+    color: inherit;
+    padding: 5px 0;
+}
+
+.c-btn--text:hover{
+    color: #00afaf;
+}
+
+.c-btn--icon-left {
+    flex-direction: row;
+}
+
+.c-btn--icon-right {
+    flex-direction: row-reverse;
+}
+
+/* Базовий розмір для іконок у кнопках */
+.c-btn__icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+
+

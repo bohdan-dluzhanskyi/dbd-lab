@@ -1,0 +1,91 @@
+/* Базовая разметка конвейера "Картинка + Текст" */
+.universal-promo__container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.universal-promo__image-wrap,
+.universal-promo__content {
+    flex: 1;
+    width: 50%;
+}
+
+.universal-promo__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* 1. ПОЛОЖЕНИЕ КАРТИНКИ */
+.universal-promo--img-left .universal-promo__container {
+    flex-direction: row;
+    /* Картинка слева, текст справа */
+}
+
+.universal-promo--img-right .universal-promo__container {
+    flex-direction: row-reverse;
+    /* Наоборот: Текст слева, картинка справа */
+}
+
+/* 2. ВЫРАВНИВАНИЕ ТЕКСТА */
+.universal-promo--align-left .universal-promo__content {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.universal-promo--align-center .universal-promo__content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 3. НАСТРОЙКА ФОНА (Стилизуем именно текстовый блок, как на твоем скриншоте) */
+.universal-promo--bg-light-blue .universal-promo__content {
+    background-color: #f1f8fc;
+    /* Светло-голубой цвет */
+    padding: 60px 40px;
+    border-radius: 24px;
+}
+
+/* Элементы текста */
+.universal-promo__title {
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+.universal-promo__text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4a4a4a;
+    margin-bottom: 24px;
+}
+
+/* Мобильная адаптивность */
+@media (max-width: 768px) {
+
+    .universal-promo__container,
+    .universal-promo--img-right .universal-promo__container {
+        flex-direction: column;
+        /* На мобилках всё встает в один столбик */
+        gap: 20px;
+    }
+
+    .universal-promo__image-wrap,
+    .universal-promo__content {
+        width: 100%;
+    }
+
+    .universal-promo--bg-light-blue .universal-promo__content {
+        padding: 30px 20px;
+    }
+}
