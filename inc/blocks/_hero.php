@@ -36,9 +36,21 @@ $image       = get_sub_field('image');
 
         <div class="hero-section__image">
             <?php if ($image) : ?>
-                <img src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>">
+                <?php
+                $img_url    = !empty($image['sizes']['large']) ? $image['sizes']['large'] : $image['url'];
+                $img_width  = !empty($image['sizes']['large-width']) ? $image['sizes']['large-width'] : $image['width'];
+                $img_height = !empty($image['sizes']['large-height']) ? $image['sizes']['large-height'] : $image['height'];
+                ?>
+                <img
+                    fetchpriority="high"
+                    loading="eager"
+                    src="<?php echo esc_url($img_url); ?>"
+                    width="<?php echo esc_attr($img_width); ?>"
+                    height="<?php echo esc_attr($img_height); ?>"
+                    alt="<?php echo esc_attr($image['alt']); ?>">
             <?php endif; ?>
         </div>
+
 
     </div>
 </section>

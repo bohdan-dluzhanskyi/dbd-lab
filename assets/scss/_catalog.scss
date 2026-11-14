@@ -1,0 +1,837 @@
+.catalog-page {
+
+        .catalog-breadcrumbs {
+        margin-bottom: 12px;
+        margin-top: 24px;
+
+        .breadcrumbs-list {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: #262626;
+            font-weight: 500;
+            padding: 4px 6px;
+
+            .mobile-back-arrow {
+                    display: none; 
+                }
+
+            li {
+                display: inline-flex;
+                align-items: center;
+            }
+
+            a {
+                font-size: 12px;
+                color: #626262;
+                font-weight: 500;
+                transition: color 0.3s ease;
+
+                &:hover {
+                    color: #00c4c4;
+                }
+            }
+        }
+    }
+
+    .catalog-header {
+        text-align: center;
+        margin-bottom: 60px;
+
+        .catalog-title {
+            font-size: 44px;
+            font-weight: 500;
+            margin: 0 0 24px 0;
+            line-height: 123%;
+        }
+
+        .catalog-description {
+            font-size: 14px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 129%;
+            font-weight: 300;
+        }
+    }
+
+    .catalog-bar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        gap: 16px;
+        margin-bottom: 24px;
+        box-sizing: border-box;
+
+        .bar-search,
+        .bar-filter,
+        .bar-sort {
+            position: relative;
+        }
+
+        .bar-search {
+            width: 318px;
+            flex-shrink: 0;
+
+            form {
+                position: relative;
+            }
+
+            .search-icon {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #00c4c4;
+                display: flex;
+            }
+
+            .search-input {
+                width: 100%;
+                padding: 8px 16px 8px 52px;
+                border: 1px solid #00c4c4;
+                border-radius: 100px;
+                font-size: 16px;
+                font-weight: 300;
+                line-height: 125%;
+                outline: none;
+                box-sizing: border-box;
+                background-color: #ffffff;
+                width: 318px;
+                height: 40px;
+            }
+        }
+
+                .bar-filter {
+                    width: 133px;
+                    flex-shrink: 0;
+        
+                    .filter-dropdown-toggle {
+                        padding: 10px 20px;
+                        border-radius: 100px;
+                        background: #f0fbfb;
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 14px;
+                        line-height: 129%;
+                        font-weight: 500;
+                        color: #262626;
+                        transition: color 0.2s ease, border-color 0.2s ease;
+        
+                        &::after {
+                            content: "";
+                            display: inline-block;
+                            width: 24px;
+                            height: 24px;
+                            flex-shrink: 0;
+                            background-color: #00c4c4;
+                            -webkit-mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTguNzUgMC43NUw0Ljc1IDQuNzVMMC43NSAwLjc1IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / 10px 6px;
+                            mask: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iNiIgdmlld0JveD0iMCAwIDEwIDYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTguNzUgMC43NUw0Ljc1IDQuNzVMMC43NSAwLjc1IiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+') no-repeat center / 10px 6px;
+                            transition: transform 0.25s ease, background-color 0.2s ease;
+                        }
+        
+                        &:hover {
+                            color: #00afaf;
+        
+                            &::after {
+                                background-color: #00afaf;
+                            }
+                        }
+                        
+                    }
+        
+                                        .filter-dropdown-content {
+                                            position: absolute;
+                                            top: 120%;
+                                            left: 0;
+                                            width: 100%;
+                                            min-width: 293px;
+                                            max-height: 400px;
+                                            /* Коли контент перевищить цю висоту, з'явиться скрол */
+                                            overflow-y: auto;
+                                            /* Додає вертикальний скрол при необхідності */
+                                            background: #ffffff;
+                                            border: 1px solid #00afaf;
+                                            border-radius: 16px;
+                                            padding: 8px 12px;
+                                            z-index: 100;
+                                            box-sizing: border-box;
+                                            margin: 0;
+                                            opacity: 0;
+                                            visibility: hidden;
+                                            transform: translateY(10px);
+                                            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+                                        
+        
+                        .checkbox-list {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 16px;
+                            overflow-y: auto;
+                            margin-bottom: 16px;
+                            
+                            
+        
+                            &::-webkit-scrollbar {
+                                width: 4px;
+                            }
+        
+                            &::-webkit-scrollbar-thumb {
+                                background-color: #e5e5e5;
+                                border-radius: 4px;
+                            }
+                        }
+        
+                        .checkbox-item {
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                            cursor: pointer;
+                            font-weight: 500;
+                            font-size: 14px;
+                            line-height: 18px;
+                            color: #262626;
+                            transition: color 0.2s ease;
+                            padding: 6px 12px;
+
+        
+                            input[type="checkbox"] {
+                                appearance: none;
+                                width: 16px;
+                                height: 16px;
+                                border: 1.50px solid #00c4c4;
+                                border-radius: 4px;
+                                outline: none;
+                                cursor: pointer;
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                transition: background-color 0.2s ease, border-color 0.2s ease;
+                                flex-shrink: 0;
+        
+                                &::before {
+                                    content: "";
+                                    width: 10px;
+                                    height: 8px;
+                                    background-color: #ffffff;
+                                    -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') no-repeat center / contain;
+                                    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') no-repeat center / contain;
+                                    transform: scale(0);
+                                    transition: transform 0.2s ease;
+                                }
+        
+                                &:checked {
+                                    background-color: #00c4c4;
+                                    border-color: #00c4c4;
+        
+                                    &::before {
+                                        transform: scale(1);
+                                    }
+                                }
+                            }
+        
+                            &:hover {
+                                color: #00afaf;
+        
+                                input[type="checkbox"]:not(:checked) {
+                                    border-color: #00afaf;
+                                }
+                            }
+                        }
+                        
+                                                .c-btn.fixed {
+                                                    position: sticky;
+                                                    bottom: 0;
+                                                    margin-top: auto;
+                                                    width: 100%;
+                                                    border-radius: 100px;
+                                                    background-color: #00c4c4;
+                                                    color: #ffffff;
+                                                    z-index: 2;
+                                                    box-shadow: 0 -10px 15px #ffffff; // Робить легке біле розмиття над кнопкою, щоб текст списку м'яко ховався під неї
+                                                }
+                    }
+        
+                    &:hover {
+                        .filter-dropdown-toggle {
+        
+                            &::after {
+                                background-color: #00afaf;
+                                transform: rotate(180deg); 
+                            }
+                        }
+        
+                        .filter-dropdown-content {
+                            opacity: 1;
+                            visibility: visible;
+                            transform: translateY(0);
+                        }
+                    }
+                }
+                // Оновлений блок сортування з кнопкою у стилі .c-btn--filled
+                                .bar-sort {
+                                    display: flex;
+                                    justify-content: flex-end;
+                                    margin-left: auto;
+                
+                                    
+                
+                                    // Кнопка сортування (повна копія стилю .c-btn--filled з іконкою зліва)
+                                    .sort-dropdown-toggle {
+                                        display: inline-flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        gap: 8px; // Відступ між SVG-іконкою та текстом за твоїм стандартом
+                                        padding: 10px 20px;
+                                        border-radius: 100px;
+                                        font-family: inherit;
+                                        font-size: 14px;
+                                        font-weight: 500;
+                                        line-height: 18px;
+                                        cursor: pointer;
+                                        background-color: #00c4c4;
+                                        color: #ffffff;
+                                        transition: all 0.3s ease;
+                                        box-sizing: border-box;
+                                        white-space: nowrap;
+                
+                                        // Стилізація твоєї кастомної SVG іконки попереду
+                                        .c-btn__icon svg {
+                                            width: 20px;
+                                            height: 20px;
+                                            display: block;
+                                            fill: none; // Сортувальні іконки зазвичай лінійні (stroke)
+                                            stroke: currentColor;
+                                        }
+                                    }
+                
+                                    // Випадаюче вікно зі списком
+                                    .sort-dropdown-content {
+                                        position: absolute;
+                                        top: 120%;
+                                        right: 0;
+                                        width: 254px;
+                                        background: #ffffff;
+                                        border: 1px solid #00afaf;
+                                        border-radius: 16px;
+                                        padding: 8px 12px;
+                                        z-index: 100;
+                                        box-sizing: border-box;
+                                        margin: 0;
+                                        list-style: none;
+                                        display: flex;
+                                        flex-direction: column;
+                                        gap: 4px;
+                
+                                        opacity: 0;
+                                        visibility: hidden;
+                                        transform: translateY(10px);
+                                        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+                
+                                        li {
+                                            a {
+                                                display: block;
+                                                padding: 9px 12px;
+                                                font-size: 14px;
+                                                line-height: 18px;
+                                                font-weight: 500;
+                                                color: #262626;
+                                                text-decoration: none;
+                                                white-space: nowrap;
+                                                border-radius: 8px;
+                                                transition: color 0.2s ease, background-color 0.2s ease;
+                
+                                                &:hover {
+                                                    color: #00afaf;
+                                                    background-color: #f0fbfb;
+                                                }
+                                            }
+                
+                                            &.is-active {
+                                                a {
+                                                    color: #00afaf;
+                                                    background-color: #f0fbfb;
+                                                    font-weight: 600;
+                                                }
+                                            }
+                                        }
+                                    }
+                
+                                    // Ефект появи списку при ховері
+                                    &:hover {
+                                        .sort-dropdown-toggle {
+                                            background-color: #00afaf;
+                                        }
+                
+                                        .sort-dropdown-content {
+                                            opacity: 1;
+                                            visibility: visible;
+                                            transform: translateY(0);
+                                        }
+                                    }
+                                }
+    }
+
+    // 4. Сетка товаров
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+        margin-bottom: 40px;
+
+    }
+
+        .product-card {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+    
+            &__link {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+    
+            &__thumb {
+                height: 330px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 24px;
+                overflow: hidden;
+                margin-bottom: 12px;
+                box-sizing: border-box;
+            }
+    
+            &__img {
+                max-height: 100%;
+                width: auto;
+                object-fit: contain;
+            }
+    
+            &__category {
+                font-weight: 300;
+                    font-size: 12px;
+                    line-height: 125%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    color: #009299;
+                    min-height: 30px;
+                    margin-bottom:16px;
+            }
+    
+            // Крупный заголовок
+            &__title {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 122%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-height: 66px; 
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                margin-bottom: 24px;
+            }
+    
+            &__meta {
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 133%;
+                margin-bottom: 6px;
+            }
+    
+            &__footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-top: auto; 
+            }
+    
+            &__price-box {
+                display: flex;
+                flex-direction: column;
+            }
+    
+            &__price-actual {
+                font-weight: 500;
+                    font-size: 24px;
+                    line-height: 121%;
+                    color: #262626;
+            }
+    
+            &__price-old {
+                font-weight: 400;
+                    font-size: 14px;
+                    line-height: 129%;
+                    text-decoration: line-through;
+                    color: #626262;
+                    margin-left: 6px;
+            }
+    
+            &__btn {
+                width: 44px;
+                height: 44px;
+                flex-shrink: 0;
+    
+                .c-btn__icon svg {
+                    width: 20px;
+                    height: 20px;
+                    stroke: #ffffff;
+                    fill: none;
+                }
+            }
+    
+            &:hover {
+    
+                .product-card__btn {
+                    background-color: #00afaf; 
+                }
+            }
+        }
+
+    .catalog-empty {
+        text-align: center;
+        padding: 100px 20px;
+        max-width: 520px;
+        margin: 0 auto;
+
+        .empty-title {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .empty-text {
+            font-size: 16px;
+            color: #626262;
+            line-height: 140%;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+    }
+
+    .catalog-pagination {
+
+        ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        span,
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 15px;
+            color: #111111;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            background-color: #f7f9fa;
+        }
+
+        span.current {
+            background-color: #00c4c4;
+            color: #ffffff;
+        }
+
+        .prev,
+        .next {
+            background-color: #00c4c4;
+            color: #ffffff;
+
+            svg {
+                display: block;
+            }
+
+            &:hover {
+                background-color: #00afaf;
+            }
+        }
+    }
+    
+}
+.catalog-promo{
+    padding-bottom: 60px;
+}
+/* ==========================================
+   АДАПТИВ СТОРІНКИ КАТАЛОГУ (ПЛАНШЕТ + МОБІЛКА)
+   ========================================== */
+
+// 1. ПЛАНШЕТНА ВЕРСІЯ (до 1024px)
+@media (max-width: 1024px) {
+    .catalog-page {
+        .catalog-header {
+            margin-bottom: 40px;
+
+            .catalog-title {
+                font-size: clamp(28px, 4.5vw, 40px);
+                line-height: 1.2;
+                margin-bottom: 16px;
+            }
+
+            .catalog-description {
+                color: #626262;
+            }
+        }
+
+        // Робимо панель пошуку та фільтрів гнучкою
+        .catalog-bar {
+            flex-wrap: wrap;
+            gap: 12px;
+
+            .bar-search {
+                width: 100%;
+
+                .search-input {
+                    width: 100%;
+                }
+            }
+
+            .bar-filter,
+            .bar-sort {
+
+                // На тач-пристроях прибираємо десктопний ховер і керуємо відкриттям через клас .is-open
+                &:hover {
+
+                    .filter-dropdown-content,
+                    .sort-dropdown-content {
+                        opacity: 0;
+                        visibility: hidden;
+                        transform: translateY(10px);
+                    }
+                }
+
+                &.is-open {
+                    .filter-dropdown-toggle::after {
+                        background-color: #00afaf;
+                        transform: rotate(180deg);
+                    }
+
+                    .sort-dropdown-toggle {
+                        background-color: #00afaf;
+                    }
+
+                    .filter-dropdown-content,
+                    .sort-dropdown-content {
+                        opacity: 1;
+                        visibility: visible;
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+
+        // На планшеті переводимо сітку товарів з 4 колонок у 2 колонки
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px 16px;
+        }
+
+        .product-card {
+            &__thumb {
+                height: 280px;
+                border-radius: 20px;
+            }
+
+            &__category {
+                min-height: auto;
+                margin-bottom: 12px;
+            }
+
+            &__title {
+                min-height: 44px;
+                margin-bottom: 16px;
+            }
+        }
+    }
+
+    .catalog-promo {
+        padding-bottom: 48px;
+    }
+}
+
+// 2. МОБІЛЬНА ВЕРСІЯ (до 576px — точне співпадіння з макетом Figma)
+@media (max-width: 576px) {
+    .catalog-page {
+        .catalog-breadcrumbs {
+                margin-top: 16px;
+                margin-bottom: 16px;
+        
+                .breadcrumbs-list {
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+        
+                    // 1. Прячем весь путь и десктопные разделители
+                    li,
+                    svg {
+                        display: none;
+                    }
+        
+                    // 2. Показываем только последний пункт (подпись текущей страницы без клика)
+                    li:last-child {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        max-width: 100%;
+                        font-size: 12px;
+                        line-height: 16px;
+                        color: #626262;
+                        font-weight: 500;
+                        cursor: default;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+        
+                        // Стили самой стрелки-ссылки, которую добавит скрипт
+                        // Стили самой стрелки-ссылки с твоим SVG
+                            .mobile-back-arrow {
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                width: 24px;
+                                height: 24px;
+                                flex-shrink: 0;
+                                cursor: pointer;
+                        
+                                // Перебиваем общее правило скрытия svg в хлебных крошках
+                                svg {
+                                    display: block;
+                                    width: 24px;
+                                    height: 24px;
+                                }
+                        
+                                &:hover svg path,
+                                &:active svg path {
+                                    stroke: #00c4c4;
+                                }
+                            }
+                    }
+                }
+            }
+
+        .catalog-header {
+            margin-bottom: 32px;
+
+            .catalog-title {
+                font-size: 28px;
+                line-height: 34px;
+                margin-bottom: 16px;
+            }
+
+            .catalog-description {
+                font-size: 14px;
+                line-height: 19px;
+            }
+        }
+
+        // Панель: пошук на всю ширину зверху, фільтр та сортування поруч знизу
+        .catalog-bar {
+            justify-content: space-between;
+            gap: 16px 12px;
+            margin-bottom: 24px;
+
+            .bar-search {
+                width: 100%;
+
+                .search-input {
+                    font-size: 14px;
+                    height: 44px;
+                    padding-left: 48px;
+                }
+            }
+
+            .bar-filter {
+                width: auto;
+                min-width: 133px;
+
+                .filter-dropdown-toggle {
+                    padding: 10px 16px;
+                    height: 40px;
+                    box-sizing: border-box;
+                }
+
+                .filter-dropdown-content {
+                    min-width: 280px;
+                    max-width: calc(100vw - 32px);
+                }
+            }
+
+            .bar-sort {
+                margin-left: auto;
+
+                .sort-dropdown-toggle {
+                    padding: 10px 16px;
+                    height: 40px;
+                    box-sizing: border-box;
+                }
+
+                .sort-dropdown-content {
+                    width: 240px;
+                    max-width: calc(100vw - 32px);
+                }
+            }
+        }
+
+        // Сітка товарів в 1 колонку, як на скріншоті
+        .products-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .product-card {
+            &__thumb {
+                height: 310px;
+                border-radius: 16px;
+                margin-bottom: 12px;
+            }
+
+            &__category {
+                margin-bottom: 8px;
+            }
+
+            &__title {
+                min-height: auto;
+                font-size: 18px;
+                line-height: 22px;
+                margin-bottom: 16px;
+            }
+
+            &__price-actual {
+                font-size: 22px;
+                line-height: 26px;
+            }
+        }
+
+        .catalog-pagination {
+            margin-bottom: 8px;
+
+            ul {
+                gap: 6px;
+            }
+
+            span,
+            a {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .catalog-promo {
+        padding-bottom: 40px;
+    }
+}

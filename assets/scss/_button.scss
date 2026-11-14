@@ -51,7 +51,6 @@
     flex-direction: row-reverse;
 }
 
-/* Базовий розмір для іконок у кнопках */
 .c-btn__icon svg {
     width: 20px;
     height: 20px;
@@ -61,4 +60,34 @@
 }
 
 
+
+@media (hover: none) {
+    .c-btn--filled:hover {
+        background-color: #00c4c4;
+    }
+
+    .c-btn--outlined:hover {
+        border-color: #00c4c4;
+    }
+
+    .c-btn--text:hover {
+        color: inherit;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .c-btn--filled,
+    .c-btn--outlined {
+        width: auto;
+        min-height: 44px; 
+        padding: 12px 24px;
+        box-sizing: border-box;
+    }
+
+    .c-btn--text {
+        width: auto;
+        min-height: 36px;
+    }
+}
 

@@ -12,11 +12,13 @@ html {
 
 body {
     font-family: 'Montserrat', sans-serif;
-    color: #262626;
+    color: #626262;
     line-height: 1.6;
     background-color: #ffffff;
     overflow-x: hidden;
     list-style: none;
+    -webkit-font-smoothing: antialiased; // Робить шрифти чіткішими на Mac/iOS
+    -moz-osx-font-smoothing: grayscale;
 }
 
 img {
@@ -28,15 +30,12 @@ img {
 .container {
     width: 100%;
     max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 60px;
-    padding-right: 60px;
+    margin: 0 auto;
+    box-sizing: border-box;
 
-    @media (max-width: 576px) {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
+    
+    padding-left: clamp(16px, 4vw, 60px);
+    padding-right: clamp(16px, 4vw, 60px);
 }
 
 a {
@@ -44,6 +43,7 @@ a {
     color: inherit;
     transition: color 0.2s ease;
 }
+
 li {
     list-style: none;
 }
@@ -54,7 +54,10 @@ h3,
 h4 {
     font-family: 'Montserrat Alternates', sans-serif;
     font-weight: 500;
+    color: #262626;
+    line-height: 1.25; 
 }
+
 button {
     padding: 0;
     border: none;
@@ -62,7 +65,18 @@ button {
     color: inherit;
     background-color: transparent;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent; 
 }
+
 address {
     font-style: normal;
+}
+
+@media (max-width: 1024px) {
+
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
 }

@@ -187,13 +187,267 @@
     }
 }
 
-@media (max-width: 576px) {
+
+.burger-btn,
+.mobile-only-logo,
+.mobile-drawer-socials,
+.btn-phone-icon {
+    display: none;
+}
+
+
+
+// 1. ПЛАНШЕТ И МОБИЛКА (включаем бургер на 1024px, так как двум меню уже тесно)
+@media (max-width: 1024px) {
     .site-header {
-        padding: 10px 8px;
+        position: relative;
+        z-index: 1000;
+        // Берем плавные отступы по бокам, чтобы шапка-таблетка не упиралась в края экрана
+        width: calc(100% - clamp(32px, 8vw, 120px));
+        margin-top: 16px;
+        padding: 0 10px 0 18px;
     }
 
-    .btn-contact {
-        padding: 8px 16px;
-        font-size: 0.8rem;
+    // Прячем десктопные соцсети из шапки и десктопный логотип из меню
+    .header-socials,
+    .desktop-only-logo,
+    .btn-text {
+        display: none;
     }
+
+    // Показываем логотип по центру шапки
+    .mobile-only-logo {
+        display: flex;
+        margin: 0;
+
+        svg {
+            height: 28px; // Аккуратный размер лого как на макете
+            width: auto;
+        }
+    }
+
+    // Кнопка Бургер / Крестик слева
+    .burger-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        width: 38px;
+        height: 38px;
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        z-index: 1002;
+
+        .burger-line {
+            width: 20px;
+            height: 2px;
+            background-color: #262626;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        // Анимация превращения в крестик при открытии меню
+        &.is-active {
+            .burger-line:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+
+            .burger-line:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger-line:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
+        }
+    }
+
+    // Круглая кнопка с трубкой справа (как на скрине Figma)
+    .btn-contact {
+        min-width: auto;
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1002;
+
+        .btn-phone-icon {
+            display: block;
+            
+        }
+    }
+
+    // ВЫПАДАЮЩЕЕ МЕНЮ (Белая панель, как на втором экране скриншота)
+        .header-right-zone {
+            position: absolute;
+            top: calc(100% + 12px); 
+            left: 0;
+            width: 100%;
+            height: calc(100dvh - 84px);
+            max-height: none; 
+            background-color: #ffffff;
+            border-radius: 24px; 
+            z-index: 999;
+    
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 24px;
+    
+            padding: 24px;
+            box-sizing: border-box;
+            overflow-y: auto;
+    
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    
+            &.is-open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+        }
+
+    .header-navigation-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 16px;
+    }
+
+        .main-menu {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            gap: 16px;
+    
+            li {
+                width: 100%;
+    
+                a {
+                    font-size: 16px;
+                    line-height: 22px;
+                    padding: 8px 0;
+                }
+    
+                // Родительский пункт с подменю ("Обладнання")
+                &:has(.sub-menu),
+                &.menu-item-has-children {
+                    &>a {
+                        justify-content: flex-start;
+                        gap: 16px;
+                    }
+    
+                    // Полностью отключаем десктопный ховер на планшетах и мобилках
+                    &:hover>.sub-menu {
+                        opacity: 0;
+                        visibility: hidden;
+                        transform: none;
+                    }
+    
+                    // Состояние при открытии аккордеона по клику (класс от JS)
+                    &.is-submenu-open {
+                        &>a {
+                            color: #00afaf;
+    
+                            &::after {
+                                transform: rotate(180deg);
+                                background-color: #00afaf;
+                            }
+                        }
+    
+                        // Важно: перебиваем правило :hover выше, если палец остался на кнопке
+                        &:hover>.sub-menu,
+                        &>.sub-menu {
+                            max-height: 600px; // С запасом под все категории
+                            opacity: 1;
+                            visibility: visible;
+                            margin-top: 8px;
+                            padding: 12px 16px;
+                        }
+                    }
+                }
+            }
+    
+            // Само подменю с плавным выездом вниз
+            .sub-menu {
+                position: static;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+    
+                width: 100%;
+                border: none;
+                background: #f0fbfb;
+                border-radius: 12px;
+    
+                max-height: 0;
+                padding: 0 16px;
+                margin-top: 0;
+                opacity: 0;
+                visibility: hidden;
+                overflow: hidden;
+                transform: none;
+    
+                transition: max-height 0.55s ease,
+                    opacity 0.45s ease,
+                    padding 0.55s ease,
+                    margin-top 0.55s ease,
+                    visibility 0.55s ease;
+    
+                li a {
+                    font-size: 14px;
+                    padding: 6px 0;
+                    display: block;
+                }
+            }
+        }
+
+ .mobile-drawer-socials {
+     display: flex;
+     gap: 12px;
+     margin-top: auto; 
+     margin-bottom: 32px;
+
+     .social-link {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         width: 38px;
+         height: 38px;
+         background-color: #00c4c4;
+         color: #ffffff;
+         border-radius: 50%;
+     }
+ }
+}
+
+// 2. МОБИЛКА (до 576px — точная подгонка под макет Figma)
+@media (max-width: 576px) {
+    .site-header {
+        width: calc(100% - 32px); // По 16px от краев экрана
+        min-height: 52px;
+    }
+
+    .header-right-zone {
+        // 16px (отступ сверху) + 52px (высота мобильного хедера) + 12px (зазор) = 80px
+        height: calc(100dvh - 80px);
+        padding: 20px 16px 24px 16px;
+    }
+}
+
+html.menu-open,
+body.menu-open {
+    overflow: hidden !important;
+    height: 100dvh;
+    touch-action: none;
 }

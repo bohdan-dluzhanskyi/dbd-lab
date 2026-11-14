@@ -1,8 +1,5 @@
 <?php
 
-/**
- * 1. Чиста функція рендеринга HTML (Адаптована під ваші CSS стили)
- */
 function render_custom_media_block($args = [])
 {
     $defaults = [
@@ -11,22 +8,21 @@ function render_custom_media_block($args = [])
         'image'          => '',
         'image_position' => 'left',
         'text_alignment' => 'left',
+        'text_width'     => '652', 
         'background'     => 'none',
         'button_data'    => [],
     ];
 
     $parsed_args = wp_parse_args($args, $defaults);
 
-    // Якщо немає ні заголовка, ні тексту, ні картинки — взагалі нічого не виводимо
     if (empty($parsed_args['title']) && empty($parsed_args['text']) && empty($parsed_args['image'])) {
         return;
     }
-
-    // Збираємо CSS-класи на основі ваших стилів
     $block_classes = [
         'universal-promo',
         "universal-promo--img-{$parsed_args['image_position']}",
         "universal-promo--align-{$parsed_args['text_alignment']}",
+        "universal-promo--width-{$parsed_args['text_width']}", 
         "universal-promo--bg-{$parsed_args['background']}"
     ];
 
@@ -36,7 +32,6 @@ function render_custom_media_block($args = [])
     <section class="<?php echo esc_attr($class_string); ?>">
         <div class="container universal-promo__container">
 
-            <!-- 1. Блок з зображенням -->
             <div class="universal-promo__image-wrap">
                 <?php if (!empty($parsed_args['image']) && is_array($parsed_args['image']) && isset($parsed_args['image']['url'])) : ?>
                     <img class="universal-promo__image"
@@ -45,27 +40,27 @@ function render_custom_media_block($args = [])
                 <?php endif; ?>
             </div>
 
-            <!-- 2. Текстовый блок контента -->
             <div class="universal-promo__content">
+                <div class="universal-promo__content-wrap">
 
-                <?php if (!empty($parsed_args['title'])) : ?>
-                    <h2 class="universal-promo__title"><?php echo wp_kses_post($parsed_args['title']); ?></h2>
-                <?php endif; ?>
+                    <?php if (!empty($parsed_args['title'])) : ?>
+                        <h2 class="universal-promo__title"><?php echo wp_kses_post($parsed_args['title']); ?></h2>
+                    <?php endif; ?>
 
-                <?php if (!empty($parsed_args['text'])) : ?>
-                    <div class="universal-promo__text"><?php echo wp_kses_post($parsed_args['text']); ?></div>
-                <?php endif; ?>
+                    <?php if (!empty($parsed_args['text'])) : ?>
+                        <div class="universal-promo__text"><?php echo wp_kses_post($parsed_args['text']); ?></div>
+                    <?php endif; ?>
 
-                <!-- 3. Вивід вашої універсальної кнопки -->
-                <?php if (!empty($parsed_args['button_data'])) : ?>
-                    <div class="universal-promo__button-wrap">
-                        <?php
-                        if (function_exists('render_acf_button')) {
-                            render_acf_button($parsed_args['button_data'], 'universal-promo__btn');
-                        }
-                        ?>
-                    </div>
-                <?php endif; ?>
+                    <?php if (!empty($parsed_args['button_data'])) : ?>
+                        <div class="universal-promo__button-wrap">
+                            <?php
+                            if (function_exists('render_acf_button')) {
+                                render_acf_button($parsed_args['button_data'], 'universal-promo__btn');
+                            }
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
             </div>
 
@@ -76,34 +71,30 @@ function render_custom_media_block($args = [])
 }
 
 /**
- * 2. Функція-обробник даних ACF
  *
  * @param array|false|null $acf_data Дані макета медіа-блоку з ACF.
  */
 function render_acf_media_block(?array $acf_data)
 {
-    // Безпечна перевірка, якщо прийшов null або пустий масив
     if (empty($acf_data)) {
         return;
     }
 
-    // Очищення від першого вкладеного рівня макета
     if (isset($acf_data['_media-block']) && is_array($acf_data['_media-block'])) {
         $acf_data = $acf_data['_media-block'];
     }
 
-    // Мапінг основних полів (title, text, image, background, styles)
     $block_args = [
         'title'          => $acf_data['title'] ?? '',
         'text'           => $acf_data['text'] ?? '',
         'image'          => $acf_data['image'] ?? '',
         'image_position' => $acf_data['image_position'] ?? 'left',
         'text_alignment' => $acf_data['text_alignment'] ?? 'left',
+        'text_width'     => $acf_data['text_width'] ?? '652', // Передаємо значення з ACF (дефолт 652)
         'background'     => $acf_data['background'] ?? 'none',
         'button_data'    => [],
     ];
 
-    // Обробка вкладеного клону кнопки
     if (!empty($acf_data['has_button'])) {
         $raw_button = [];
 
@@ -126,6 +117,5 @@ function render_acf_media_block(?array $acf_data)
         }
     }
 
-    // Запуск рендерингу
     render_custom_media_block($block_args);
 }

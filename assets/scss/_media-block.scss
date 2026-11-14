@@ -1,91 +1,210 @@
-/* Базовая разметка конвейера "Картинка + Текст" */
-.universal-promo__container {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
+.universal-promo {
+    padding: 60px 0;
 
-.universal-promo__image-wrap,
-.universal-promo__content {
-    flex: 1;
-    width: 50%;
-}
-
-.universal-promo__image {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    border-radius: 16px;
-}
-
-/* 1. ПОЛОЖЕНИЕ КАРТИНКИ */
-.universal-promo--img-left .universal-promo__container {
-    flex-direction: row;
-    /* Картинка слева, текст справа */
-}
-
-.universal-promo--img-right .universal-promo__container {
-    flex-direction: row-reverse;
-    /* Наоборот: Текст слева, картинка справа */
-}
-
-/* 2. ВЫРАВНИВАНИЕ ТЕКСТА */
-.universal-promo--align-left .universal-promo__content {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.universal-promo--align-center .universal-promo__content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* 3. НАСТРОЙКА ФОНА (Стилизуем именно текстовый блок, как на твоем скриншоте) */
-.universal-promo--bg-light-blue .universal-promo__content {
-    background-color: #f1f8fc;
-    /* Светло-голубой цвет */
-    padding: 60px 40px;
-    border-radius: 24px;
-}
-
-/* Элементы текста */
-.universal-promo__title {
-    font-size: 36px;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    color: #1a1a1a;
-}
-
-.universal-promo__text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #4a4a4a;
-    margin-bottom: 24px;
-}
-
-/* Мобильная адаптивность */
-@media (max-width: 768px) {
-
-    .universal-promo__container,
-    .universal-promo--img-right .universal-promo__container {
-        flex-direction: column;
-        /* На мобилках всё встает в один столбик */
-        gap: 20px;
+    &__container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 
-    .universal-promo__image-wrap,
-    .universal-promo__content {
+    &__image {
+        width: 100%; 
+        width: 652px;
+        height: 400px;
+        display: block;
+        object-fit: cover;
+        border-radius: 24px;
+    }
+
+    &__content {
+        flex: 1; 
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    &__content-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
         width: 100%;
     }
 
-    .universal-promo--bg-light-blue .universal-promo__content {
-        padding: 30px 20px;
+    &__title {
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 123%;
+
+        span {
+            color: #00c4c4;
+        }
+    }
+
+    &__text {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 125%;
+        color: #626262;
+    }
+
+    &--img-left {
+        .universal-promo__container {
+            flex-direction: row;
+        }
+    }
+
+    &--img-right {
+        .universal-promo__container {
+            flex-direction: row-reverse;
+        }
+    }
+
+    &--align-left {
+        .universal-promo__content {
+            justify-content: flex-start; 
+        }
+
+        .universal-promo__content-wrap {
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .universal-promo__button-wrap {
+            margin-top: 36px;
+        }
+    }
+
+    &--align-center {
+        .universal-promo__content {
+            justify-content: center; 
+        }
+
+        .universal-promo__content-wrap {
+            text-align: center;
+            align-items: center;
+        }
+    }
+
+    &--width-652 {
+        .universal-promo__content-wrap {
+            max-width: 652px;
+        }
+    }
+
+    &--width-540 {
+        .universal-promo__content-wrap {
+            max-width: 540px;
+        }
+    }
+
+    &--bg-light-blue {
+        .universal-promo__content {
+            background-color: #f0fbfb;
+            border-radius: 24px;
+            padding: 60px 32px;
+            height: 400px;
+            justify-content: center;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .universal-promo {
+        padding: 40px 0;
+
+        &__container {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 24px;
+        }
+
+        
+        &--img-left .universal-promo__container {
+            flex-direction: column;
+        }
+
+        &--img-right .universal-promo__container {
+            flex-direction: column-reverse;
+        }
+
+        &__image-wrap {
+            width: 100%;
+        }
+
+        &__image {
+            width: 100%;
+            height: 360px;
+        }
+
+        &__title {
+            font-size: clamp(28px, 4vw, 38px);
+            line-height: 1.2;
+        }
+
+        &--width-652,
+        &--width-540 {
+            .universal-promo__content-wrap {
+                max-width: 100%;
+            }
+        }
+
+        &--bg-light-blue {
+            .universal-promo__content {
+                height: auto;
+                padding: 40px 24px;
+            }
+        }
+
+        &--align-left {
+            .universal-promo__button-wrap {
+                margin-top: 24px;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .universal-promo {
+        padding: 40px 0;
+
+        &__container {
+            gap: 24px;
+        }
+
+        &__image {
+            height: 300px;
+            border-radius: 16px;
+        }
+
+        &__content-wrap {
+            gap: 24px;
+        }
+
+        &__title {
+            font-size: 28px;
+            line-height: 34px;
+        }
+
+        &__text {
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        &--bg-light-blue {
+            .universal-promo__content {
+                border-radius: 16px;
+                padding: 24px 16px;
+            }
+        }
+
+        &--align-left {
+            .universal-promo__button-wrap {
+                margin-top: 8px;
+            }
+        }
+
+        &__btn {
+            min-width: 210px;
+        }
     }
 }

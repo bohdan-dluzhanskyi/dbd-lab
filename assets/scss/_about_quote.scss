@@ -1,0 +1,162 @@
+.about-quote-section {
+    padding: 60px 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+
+    .about-quote-wrapper {
+        position: relative;
+        text-align: center;
+        max-width: 1320px;
+        height: 153px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-quote-title {
+        font-size: 32px;
+        line-height: 122%;
+        font-weight: 500;
+        display: flex;
+        position: relative;
+        z-index: 2;
+    }
+
+    .quote-tag {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-size: 14px;
+        line-height: 129%;
+        font-weight: 500;
+        z-index: 1;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+        position: absolute;
+
+        &.tag-id-1,
+        &.tag-id-4 {
+            background-color: #f0fbfb;
+        }
+
+        &.tag-id-2,
+        &.tag-id-3 {
+            background-color: #00c4c4;
+            color: #ffffff;
+        }
+
+        &.tag-id-1 {
+            top: 0;
+            left: 5%;
+        }
+
+        &.tag-id-2 {
+            top: 10px;
+            right: 28%;
+        }
+
+        &.tag-id-3 {
+            bottom: 0;
+            left: 25%;
+        }
+
+        &.tag-id-4 {
+            bottom: 10px;
+            right: 8%;
+        }
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .about-quote-section {
+        padding: 40px 0;
+
+        .about-quote-container {
+            padding-left: clamp(16px, 4vw, 60px);
+            padding-right: clamp(16px, 4vw, 60px);
+            box-sizing: border-box;
+        }
+
+        .about-quote-wrapper {
+            height: auto;
+            padding: 44px 16px;
+        }
+
+        .about-quote-title {
+            font-size: clamp(22px, 3.2vw, 32px);
+            max-width: 640px;
+            justify-content: center;
+        }
+
+        .quote-tag {
+            padding: 8px 16px;
+            font-size: 13px;
+
+            &.tag-id-1 {
+                left: 0;
+            }
+
+            &.tag-id-2 {
+                right: 8%;
+            }
+
+            &.tag-id-3 {
+                left: 8%;
+            }
+
+            &.tag-id-4 {
+                right: 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .about-quote-section {
+        padding: 40px 0;
+
+        .about-quote-wrapper {
+            height: auto;
+            min-height: auto;
+            padding: 0;
+            flex-direction: column;
+        }
+
+        .about-quote-tags {
+            display: contents;
+        }
+
+        .about-quote-title {
+            display: block;
+            font-size: 18px;
+            line-height: 22px;
+            max-width: 100%;
+            text-align: center;
+            order: 2;
+        }
+
+        .quote-tag {
+            position: static;
+            padding: 8px 16px;
+            font-size: 12px;
+            line-height: 16px;
+
+            &.tag-id-1 {
+                order: 1;
+                align-self: flex-start;
+            }
+
+            &.tag-id-2 {
+                order: 3;
+                align-self: flex-end;
+            }
+
+            &:nth-child(n+3) {
+                display: none;
+            }
+        }
+    }
+}

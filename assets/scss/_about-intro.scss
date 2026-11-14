@@ -114,3 +114,169 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .about-intro {
+        padding: 40px 0;
+
+        &__container {
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        &__bg-layer,
+        &__content {
+            display: contents;
+        }
+
+        &__row-top {
+            order: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        &__top-text {
+            max-width: 100%;
+        }
+
+        &__title-left,
+        &__title-right,
+        &__image {
+            position: static;
+            transform: none;
+            left: auto;
+            top: auto;
+            bottom: auto;
+        }
+
+        &__title {
+            width: 100%;
+            font-size: clamp(28px, 4vw, 38px);
+            line-height: 1.2;
+        }
+
+        &__title-left {
+            order: 2;
+            margin-top: 8px;
+        }
+
+        &__image {
+            order: 3;
+            margin: 8px auto;
+            max-width: 340px;
+
+            img {
+                height: auto;
+                max-height: 440px;
+                width: 100%;
+            }
+        }
+
+        &__title-right {
+            order: 4;
+            align-self: flex-end;
+            max-width: 75%;
+
+            .about-intro__title {
+                text-align: right;
+            }
+        }
+
+        &__row-bottom {
+            order: 5;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        &__benefits-wrap {
+            width: 100%;
+        }
+    }
+
+    .intro-benefits {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        width: 100%;
+    }
+
+    .intro-benefit-card .intro-benefit-card__desc {
+        max-width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-intro {
+        padding:40px 0;
+
+        &__container {
+            gap: 16px;
+        }
+
+        &__row-top {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        &__top-text {
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        &__title {
+            font-size: 28px;
+            line-height: 34px;
+        }
+
+        &__image {
+            max-width: 240px;
+            margin: 4px auto;
+
+            img {
+                max-height: 309px;
+            }
+        }
+        &__title-left {
+            max-width: 50%;
+        }
+
+        &__title-right {
+            max-width: 82%;
+
+            .about-intro__title {
+                text-align: left;
+            }
+        }
+
+        &__row-bottom {
+            margin-top: 12px;
+            gap: 20px;
+        }
+    }
+
+    .intro-benefits {
+        gap: 16px;
+    }
+
+    .intro-benefit-card {
+        gap: 12px;
+
+        .intro-benefit-card__number {
+            font-size: 15px;
+            line-height: 19px;
+            max-width: 50%;
+        }
+
+        .intro-benefit-card__desc {
+            font-size: 12px;
+            line-height: 15px;
+            max-width: 70%;
+        }
+    }
+}

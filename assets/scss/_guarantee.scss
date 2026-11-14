@@ -1,0 +1,169 @@
+.guarantee-section {
+    padding: 60px 0;
+    width: 100%;
+
+    .guarantee-wrapper {
+        position: relative;
+        max-width: 1320px;
+        margin: 0 auto;
+        min-height: 324px;
+        display: flex;
+        align-items: center;
+    }
+
+    .guarantee-info {
+        max-width: 540px;
+        z-index: 2;
+    }
+
+    .guarantee-title {
+        font-size: 40px;
+        line-height: 123%;
+        font-weight: 500;
+        margin: 0 0 24px 0;
+    }
+
+    .guarantee-desc {
+        font-size: 16px;
+        line-height: 125%;
+        font-weight: 300;
+        margin: 0;
+    }
+
+    .guarantee-card {
+        position: absolute;
+        background: #f0fbfb;
+        border-radius: 24px;
+        padding: 24px;
+        box-sizing: border-box;
+        width: 318px;
+        min-height: 154px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 1;
+
+        &.card-id-1 {
+            top: 0px;
+            left: 50%;
+        }
+
+        &.card-id-2 {
+            bottom: 0px;
+            right: 0;
+        }
+    }
+
+    .guarantee-card-subtitle {
+        font-size: 24px;
+        line-height: 120%;
+        font-weight: 500;
+    }
+
+    .guarantee-card-text {
+        font-size: 14px;
+        line-height: 130%;
+        font-weight: 300;
+    }
+}
+
+@media (max-width: 1024px) {
+    .guarantee-section {
+        padding: 48px 0;
+
+        .guarantee-wrapper {
+            min-height: auto;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 32px;
+        }
+
+        .guarantee-info {
+            max-width: 100%;
+        }
+
+        .guarantee-title {
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .guarantee-desc {
+            color: #626262;
+        }
+
+        .guarantee-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .guarantee-card {
+            position: static;
+            width: 100%;
+            min-height: 140px;
+            padding: 20px;
+
+            &.card-id-1,
+            &.card-id-2 {
+                top: auto;
+                bottom: auto;
+                left: auto;
+                right: auto;
+            }
+        }
+
+        .guarantee-card-subtitle {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .guarantee-card-text {
+            color: #626262;
+            margin: 0;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .guarantee-section {
+        padding: 40px 0;
+
+        .guarantee-wrapper {
+            gap: 40px;
+        }
+
+        .guarantee-title {
+            font-size: 28px;
+            line-height: 34px;
+            margin-bottom: 24px;
+        }
+
+        .guarantee-desc {
+            font-size: 14px;
+            line-height: 18px;
+        }
+
+        .guarantee-cards {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .guarantee-card {
+            min-height: auto;
+            border-radius: 16px;
+            padding: 16px;
+            gap: 32px;
+        }
+
+        .guarantee-card-subtitle {
+            font-size: 20px;
+            line-height: 24px;
+        }
+
+        .guarantee-card-text {
+            font-size: 12px;
+            line-height: 15px;
+        }
+    }
+}

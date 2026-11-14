@@ -19,7 +19,7 @@
     }
 
     &__subtitle {
-        font-weight: 400;
+        font-weight: 300;
         font-size: 16px;
         line-height: 20px; 
         color: #626262;
@@ -105,6 +105,103 @@
             opacity: 1;
             visibility: visible;
             transform: scale(1); 
+        }
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .directions-section {
+        padding: 48px 0;
+
+        &__header {
+            margin-bottom: 40px;
+        }
+
+        &__main-title {
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+    }
+
+    .directions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .direction-card {
+        min-height: 170px;
+        padding: 20px;
+
+        &__title {
+            width: auto;
+            height: auto;
+            padding-right: 48px;
+            font-size: 20px;
+            margin-bottom: 24px;
+        }
+
+        &__circle-btn {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .directions-section {
+        padding: 40px 0;
+
+        &__header {
+            margin-bottom: 40px;
+        }
+
+        &__main-title {
+            font-size: 28px;
+            line-height: 34px;
+            margin-bottom: 12px;
+        }
+
+        &__subtitle {
+            font-size: 14px;
+            line-height: 18px;
+        }
+    }
+
+    .directions-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .direction-card {
+        min-height: auto;
+        border-radius: 20px;
+        padding: 16px;
+
+        &__circle-btn {
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        &__title {
+            font-size: 20px;
+            line-height: 24px;
+            padding-right: 44px;
+            margin-bottom: 24px;
+        }
+
+        &__desc {
+            font-size: 12px;
+            line-height: 15px;
         }
     }
 }

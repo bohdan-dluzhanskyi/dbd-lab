@@ -1,0 +1,122 @@
+.audience-section {
+    padding: 60px 0;
+    width: 100%;
+
+    .audience-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .audience-card {
+        background: #f0fbfb;
+        border-radius: 24px;
+        padding: 24px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 188px;
+
+        &.audience-main-title {
+            background: transparent;
+            padding: 0;
+            justify-content: flex-start;
+
+            h2 {
+                font-size: 40px;
+                line-height: 123%;
+                font-weight: 500;
+                margin: 0;
+
+                span{
+                    color: #00c4c4;;
+                }
+            }
+        }
+
+        &-title {
+            font-size: 24px;
+            line-height: 121%;
+            font-weight: 500;
+        }
+
+        &-desc {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 129%;
+            color: #626262;
+        }
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .audience-section {
+        padding: 40px 0;
+
+        .audience-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .audience-card {
+            min-height: 164px;
+            padding: 20px;
+
+            &.audience-main-title {
+                padding: 0;
+
+                h2 {
+                    font-size: clamp(28px, 3.8vw, 40px);
+                    line-height: 1.2;
+                }
+            }
+
+            &-title {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .audience-section {
+        padding:40px 0 0 0 ;
+
+        .audience-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .audience-card {
+            min-height: auto;
+            border-radius: 20px;
+            padding:16px;
+            gap: 32px;
+
+            &.audience-main-title {
+                margin-bottom: 40px;
+
+                h2 {
+                    font-size: 28px;
+                    line-height: 34px;
+                    max-width: 50%;
+                }
+            }
+
+            &-title {
+                font-size: 20px;
+                line-height: 24px;
+                margin-bottom: 0;
+                max-width: 70%;
+            }
+
+            &-desc {
+                font-size: 12px;
+                line-height: 15px;
+            }
+        }
+    }
+}

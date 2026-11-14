@@ -1,0 +1,140 @@
+.text-promo {
+    padding: 60px 0 0 0;
+
+    &--has-padding{
+        padding-bottom: 60px;
+    }
+
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        gap: 24px;
+    }
+
+    &__title {
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 123%;
+        margin: 0;
+        max-width: 874px;
+
+        span {
+            color: #00c4c4;
+        }
+    }
+
+    &__text {
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 125%;
+        color: #626262;
+        max-width: 652px;
+    }
+
+    &__buttons-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px; 
+        flex-wrap: wrap; 
+    }
+
+    &--bg-light-blue {
+        .text-promo__content {
+            background-color: #f0fbfb;
+            border-radius: 24px;
+            padding: 60px 32px;
+            max-width: 100%; 
+        }
+    }
+}
+.b2b-section-wrapper {
+    .text-promo__buttons-wrap {
+        margin-top: 36px; 
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .text-promo {
+        padding: 40px 0 0 0;
+
+        &--has-padding {
+            padding-bottom: 40px;
+        }
+
+        &__title {
+            font-size: clamp(28px, 4vw, 40px);
+            line-height: 1.2;
+        }
+
+        &--bg-light-blue {
+            .text-promo__content {
+                padding: 40px 24px;
+            }
+        }
+    }
+
+    .b2b-section-wrapper {
+        .text-promo__buttons-wrap {
+            margin-top: 24px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .text-promo {
+        padding: 40px 0 0 0;
+
+        &--has-padding {
+            padding-bottom: 40px;
+        }
+
+        &__content {
+            gap: 24px;
+        }
+
+        &__title {
+            font-size: 28px;
+            line-height: 34px;
+        }
+
+        &__text {
+            font-size: 14px;
+            line-height: 18px;
+            max-width: 90%;
+        }
+
+        &__buttons-wrap {
+            flex-direction: column;
+            width: 100%;
+            gap: 12px;
+        }
+
+        &__btn {
+            box-sizing: border-box;
+        }
+
+        &--bg-light-blue {
+            .text-promo__content {
+                border-radius: 16px;
+                padding: 40px 16px;
+            }
+        }
+    }
+
+    .b2b-section-wrapper {
+        .text-promo__buttons-wrap {
+            margin-top: 16px;
+        }
+    }
+}

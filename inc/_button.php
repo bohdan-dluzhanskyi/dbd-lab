@@ -1,5 +1,6 @@
 <?php
-function render_custom_button($args = []) {
+function render_custom_button($args = [])
+{
     $defaults = [
         'text'          => '',
         'type'          => 'link',
@@ -15,13 +16,27 @@ function render_custom_button($args = []) {
 
     if (empty($text) && empty($icon)) return '';
 
+    // Базові класи кнопки
     $base_classes = ['c-btn', "c-btn--{$style}"];
+
     if (!empty($icon)) {
         $base_classes[] = "c-btn--with-icon";
         $base_classes[] = "c-btn--icon-{$icon_position}";
     }
-    if (!empty($class)) $base_classes[] = $class;
-    $class_string = implode(' ', array_map('sanitize_html_class', $base_classes));
+
+    // Якщо передано додаткові класи, розбиваємо їх по пробілах, щоб очистити кожен окремо
+    if (!empty($class)) {
+        $extra_classes = explode(' ', $class);
+        foreach ($extra_classes as $single_class) {
+            $cleaned = sanitize_html_class(trim($single_class));
+            if (!empty($cleaned)) {
+                $base_classes[] = $cleaned;
+            }
+        }
+    }
+
+    // Склеюємо всі класи строго через ОДИН пробіл
+    $class_string = implode(' ', array_unique($base_classes));
 
     $attr_string = '';
     if (!empty($attributes)) {
@@ -30,35 +45,41 @@ function render_custom_button($args = []) {
         }
     }
 
-        $icon_html = '';
-        if (!empty($icon)) {
-            $icon_path = get_template_directory() . "/assets/images/icons/{$icon}.svg";
+    $icon_html = '';
+    if (!empty($icon)) {
+        $icon_path = get_template_directory() . "/assets/images/icons/{$icon}.svg";
 
-            if (file_exists($icon_path)) {
-                $svg_content = file_get_contents($icon_path);
-
-                $icon_html = '<span class="c-btn__icon icon-' . esc_attr($icon) . '">' . $svg_content . '</span>';
-            }
+        if (file_exists($icon_path)) {
+            $svg_content = file_get_contents($icon_path);
+            $icon_html = '<span class="c-btn__icon icon-' . esc_attr($icon) . '">' . $svg_content . '</span>';
         }
+    }
 
-        switch ($type) {
+    switch ($type) {
         case 'button':
         case 'modal':
-            $tag = 'button'; $type_attr = 'type="button"'; break;
+            $tag = 'button';
+            $type_attr = 'type="button"';
+            break;
         case 'dropdown':
-            $tag = 'button'; $type_attr = 'type="button"'; $attr_string .= ' aria-haspopup="true" aria-expanded="false"'; break;
+            $tag = 'button';
+            $type_attr = 'type="button"';
+            $attr_string .= ' aria-haspopup="true" aria-expanded="false"';
+            break;
         case 'link':
         default:
-            $tag = 'a'; $type_attr = 'href="' . esc_url($url) . '"'; break;
+            $tag = 'a';
+            $type_attr = 'href="' . esc_url($url) . '"';
+            break;
     }
 
     ob_start(); ?>
-    <<?php echo $tag; ?> <?php echo $type_attr; ?> class="<?php echo $class_string; ?>"<?php echo $attr_string; ?>>
+    <<?php echo $tag; ?> <?php echo $type_attr; ?> class="<?php echo esc_attr($class_string); ?>" <?php echo $attr_string; ?>>
         <?php if ($icon_position === 'left') echo $icon_html; ?>
         <span class="c-btn__text"><?php echo esc_html($text); ?></span>
         <?php if ($icon_position === 'right') echo $icon_html; ?>
     </<?php echo $tag; ?>>
-    <?php echo ob_get_clean();
+<?php echo ob_get_clean();
 }
 
 /**
@@ -73,39 +94,46 @@ function render_acf_button(array $button_data, string $extra_class = '')
         return;
     }
 
-    $btn_args = [
-        'text'  => $button_data['button_text_'],
-        'style' => $button_data['button_style_'] ?? 'filled',
-        'icon'  => (isset($button_data['button_icon']) && $button_data['button_icon'] !== 'none') ? $button_data['button_icon'] : '',
-        'class' => $extra_class,
-    ];
+    // Збираємо класи в масив, щоб уникнути будь-яких проблем із пробілами
+    $classes = [];
+    if (!empty($extra_class)) {
+        $classes[] = trim($extra_class);
+    }
 
     switch ($button_data['button_action_type']) {
         case 'modal':
-            $btn_args['type'] = 'modal';
-            $btn_args['attributes'] = [
-                'data-open-modal' => $button_data['modal_id_'] ?? '' 
-            ];
+            $type = 'modal';
+            $classes[] = 'open-callback-modal'; // Ваш клас для модалки
             break;
 
         case 'dropdown':
-            $btn_args['type']          = 'dropdown';
-            $btn_args['icon_position'] = 'right';
-            $btn_args['class']        .= ' js-dropdown-trigger';
+            $type = 'dropdown';
+            $classes[] = 'js-dropdown-trigger';
             break;
 
         case 'link':
         default:
-            $btn_args['type'] = 'link';
-            if (!empty($button_data['button_url_'])) {
-                $btn_args['url'] = $button_data['button_url_'];
-                $btn_args['attributes'] = [
-                    'target' => '_self'
-                ];
-            } else {
-                $btn_args['url'] = '#';
-            }
+            $type = 'link';
             break;
+    }
+
+    // Збираємо аргументи
+    $btn_args = [
+        'text'  => $button_data['button_text_'],
+        'type'  => $type,
+        'style' => $button_data['button_style_'] ?? 'filled',
+        'icon'  => (isset($button_data['button_icon']) && $button_data['button_icon'] !== 'none') ? $button_data['button_icon'] : '',
+        'class' => implode(' ', $classes), // Склеюємо класи через пробіл
+    ];
+
+    // Додаткові атрибути для посилань
+    if ($type === 'link') {
+        if (!empty($button_data['button_url_'])) {
+            $btn_args['url'] = $button_data['button_url_'];
+            $btn_args['attributes'] = ['target' => '_self'];
+        } else {
+            $btn_args['url'] = '#';
+        }
     }
 
     render_custom_button($btn_args);
