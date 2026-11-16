@@ -132,7 +132,7 @@ function initNavigation() {
                 const backArrow = document.createElement('a');
                 backArrow.href = prevLink.href;
                 backArrow.className = 'mobile-back-arrow';
-                backArrow.setAttribute('aria-label', 'Назад');
+                backArrow.setAttribute('aria-label', 'Back to previous page');
                 backArrow.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 16L10 12L14 8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#626262" /></svg>`;
                 currentItem.prepend(backArrow);
             }
@@ -182,6 +182,11 @@ function initCatalog() {
     const ajaxContainer = document.getElementById('catalog-ajax-container');
     if (!ajaxContainer) return;
 
+    // Убираем /page/2/ из пути при изменении фильтров или поиска
+    function getCleanBaseUrl() {
+        return window.location.pathname.replace(/\/page\/\d+\/?$/, '/');
+    }
+
     async function loadCatalog(url) {
         ajaxContainer.style.opacity = '0.5';
         ajaxContainer.style.transition = 'opacity 0.2s ease';
@@ -190,13 +195,35 @@ function initCatalog() {
             const decodedUrl = decodeURIComponent(url);
             const response = await fetch(decodedUrl);
             if (!response.ok) throw new Error('Network error');
-            
+
             const htmlText = await response.text();
             const doc = new DOMParser().parseFromString(htmlText, 'text/html');
             const newContent = doc.getElementById('catalog-ajax-container');
 
             if (newContent) {
+                // 1. Обновляем сетку товаров и пагинацию
                 ajaxContainer.innerHTML = newContent.innerHTML;
+
+                // 2. Обновляем кнопку сортировки, активный пункт и её ссылки
+                const newSort = doc.querySelector('.bar-sort');
+                const currentSort = document.querySelector('.bar-sort');
+                if (newSort && currentSort) {
+                    currentSort.innerHTML = newSort.innerHTML;
+                }
+
+                // 3. Синхронизируем поле поиска и чекбоксы с текущим URL
+                const newUrlObj = new URL(decodedUrl, window.location.origin);
+                const searchInput = document.querySelector('.bar-search input[name="f_search"]');
+                if (searchInput) {
+                    searchInput.value = newUrlObj.searchParams.get('f_search') || '';
+                }
+
+                const activeSubs = newUrlObj.searchParams.getAll('f_sub[]');
+                document.querySelectorAll('.bar-filter input[name="f_sub[]"]').forEach(cb => {
+                    cb.checked = activeSubs.includes(cb.value);
+                });
+
+                // 4. Записываем актуальный URL в историю браузера
                 window.history.pushState({ url: decodedUrl }, '', decodedUrl);
             }
         } catch (error) {
@@ -206,35 +233,66 @@ function initCatalog() {
         }
     }
 
-    // Отправка форм поиска и фильтрации в каталоге
+    // Отправка форм поиска и фильтрации (сохраняем все активные параметры)
     document.addEventListener('submit', (e) => {
         const form = e.target;
-        if (form.closest('.bar-search form') || form.closest('.bar-filter form')) {
-            e.preventDefault();
-            const params = new URLSearchParams();
+        if (!form.closest('.bar-search form') && !form.closest('.bar-filter form')) return;
 
-            const searchInput = form.querySelector('input[name="s"]');
-            if (searchInput && searchInput.value) {
-                params.append('s', searchInput.value);
-                const postType = form.querySelector('input[name="post_type"]');
-                if (postType) params.append('post_type', postType.value);
+        e.preventDefault();
+        barFilter?.classList.remove('is-open');
+
+        // Берем все текущие параметры из URL (чтобы не потерять сортировку, поиск или фильтр)
+        const params = new URLSearchParams(window.location.search);
+
+        // Если отправили форму ПОИСКА — обновляем только 'f_search'
+        if (form.closest('.bar-search form')) {
+            const searchInput = form.querySelector('input[name="f_search"]');
+            const searchValue = searchInput ? searchInput.value.trim() : '';
+
+            if (searchValue) {
+                params.set('f_search', searchValue);
+            } else {
+                params.delete('f_search');
             }
+        }
 
+        // Если отправили форму ФИЛЬТРА — обновляем только 'f_sub[]'
+        if (form.closest('.bar-filter form')) {
+            params.delete('f_sub[]');
             form.querySelectorAll('input[name="f_sub[]"]:checked').forEach((checkbox) => {
                 params.append('f_sub[]', checkbox.value);
             });
-
-            const baseUrl = window.location.pathname;
-            const queryString = decodeURIComponent(params.toString());
-            loadCatalog(queryString ? `${baseUrl}?${queryString}` : baseUrl);
         }
+
+        const baseUrl = getCleanBaseUrl();
+        const queryString = decodeURIComponent(params.toString());
+        loadCatalog(queryString ? `${baseUrl}?${queryString}` : baseUrl);
     });
+
+        // Автоматический сброс поиска, если пользователь очистил поле (нажал крестик в инпуте или стер текст)
+    const searchInputEl = document.querySelector('.bar-search input[name="f_search"]');
+    if (searchInputEl) {
+        searchInputEl.addEventListener('search', () => {
+            if (searchInputEl.value.trim() === '') {
+                const params = new URLSearchParams(window.location.search);
+                if (params.has('f_search')) {
+                    params.delete('f_search');
+                    const baseUrl = getCleanBaseUrl();
+                    const queryString = decodeURIComponent(params.toString());
+                    loadCatalog(queryString ? `${baseUrl}?${queryString}` : baseUrl);
+                }
+            }
+        });
+    }
+
 
     // Клики по сортировке, пагинации и кнопке сброса
     document.addEventListener('click', (e) => {
-        const link = e.target.closest('.bar-sort a, .catalog-pagination a, .btn-clear');
+        const link = e.target.closest('.bar-sort a, .catalog-pagination a, .catalog-empty a');
         if (link) {
             e.preventDefault();
+            barSort?.classList.remove('is-open');
+            barFilter?.classList.remove('is-open');
             const targetUrl = link.getAttribute('href');
             if (targetUrl) loadCatalog(targetUrl);
         }
@@ -245,6 +303,8 @@ function initCatalog() {
         loadCatalog(window.location.href);
     });
 }
+
+
 
 
 /**

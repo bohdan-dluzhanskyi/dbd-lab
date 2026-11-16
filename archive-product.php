@@ -32,16 +32,17 @@ get_header(); ?>
 
         <section class="catalog-bar">
             <div class="bar-search">
-                <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
+                <form role="search" method="get" action="">
                     <span class="search-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
                             <path d="M14.3333 14.3333L19 19M10.4444 15.8889C7.43756 15.8889 5 13.4513 5 10.4444C5 7.43756 7.43756 5 10.4444 5C13.4513 5 15.8889 7.43756 15.8889 10.4444C15.8889 13.4513 13.4513 15.8889 10.4444 15.8889Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#00C4C4" />
                         </svg>
                     </span>
-                    <input type="search" class="search-input" placeholder="<?php esc_attr_e('Search', 'woocommerce'); ?>" value="<?php echo get_search_query(); ?>" name="s" />
-                    <input type="hidden" name="post_type" value="product" />
+                    <?php $current_search = isset($_GET['f_search']) ? sanitize_text_field(wp_unslash($_GET['f_search'])) : ''; ?>
+                    <input type="search" class="search-input" placeholder="<?php echo esc_attr(pll__('Пошук')); ?>" value="<?php echo esc_attr($current_search); ?>" name="f_search" />
                 </form>
             </div>
+
 
             <div class="bar-filter">
                 <div class="filter-dropdown-toggle">
@@ -86,9 +87,9 @@ get_header(); ?>
                 $current_orderby = isset($_GET['orderby']) ? sanitize_text_field($_GET['orderby']) : 'title';
 
                 $sort_options = array(
-                    'price'      => __('За ціною: від нижчої', 'woocommerce'),
-                    'price-desc' => __('За ціною: від вищої', 'woocommerce'),
-                    'title'      => __('За алфавітом', 'woocommerce'),
+                    'price'      => pll__('За ціною: від нижчої'),
+                    'price-desc' => pll__('За ціною: від вищої'),
+                    'title'      => pll__('За алфавітом'),
                 );
 
                 $active_text = isset($sort_options[$current_orderby]) ? $sort_options[$current_orderby] : $sort_options['title'];
@@ -150,26 +151,31 @@ get_header(); ?>
 
                                 <h3 class="product-card__title"><?php the_title(); ?></h3>
 
-
-
                                 <div class="product-card__price-box">
                                     <div class="product-card__footer">
                                         <div>
-                                            <div class="product-card__meta">
-                                                <?php
-                                                $product = wc_get_product(get_the_ID());
+                                            <?php
+                                            $product = wc_get_product(get_the_ID());
+                                            $usd_rate = floatval(get_field('dollar_rate', 'option'));
+                                            $eur_rate = floatval(get_field('euro_rate', 'option'));
 
+                                            if ($product instanceof WC_Product_Variable) {
+                                                $price_usd      = floatval($product->get_variation_price('min', true));
+                                                $woo_reg_price  = floatval($product->get_variation_regular_price('min', true));
+                                                $woo_sale_price = floatval($product->get_variation_sale_price('min', true));
+                                            } else {
                                                 $woo_reg_price  = floatval($product->get_regular_price());
                                                 $woo_sale_price = floatval($product->get_sale_price());
+                                                $price_usd      = $woo_sale_price ? $woo_sale_price : $woo_reg_price;
+                                            }
+                                            ?>
 
-                                                $price_usd = $woo_sale_price ? $woo_sale_price : $woo_reg_price;
-                                                $usd_rate  = floatval(get_field('dollar_rate', 'option'));
-                                                $eur_rate  = floatval(get_field('euro_rate', 'option'));
 
+                                            <div class="product-card__meta">
+                                                <?php
                                                 if ($price_usd > 0) {
                                                     $output = number_format($price_usd, 0, '.', '') . '$';
 
-                                                    // Если заданы оба курса, считаем цену в евро
                                                     if ($usd_rate > 0 && $eur_rate > 0) {
                                                         $price_eur = ($price_usd * $usd_rate) / $eur_rate;
                                                         $output .= ' / ' . number_format($price_eur, 0, '.', '') . '€';
@@ -182,14 +188,12 @@ get_header(); ?>
 
                                             <div class="product-card__prices">
                                                 <?php
-                                                $usd_rate = floatval(get_field('dollar_rate', 'option'));
-
                                                 if ($price_usd > 0 && $usd_rate > 0) {
                                                     $final_price_uah = $price_usd * $usd_rate;
 
                                                     echo '<span class="product-card__price-actual">' . number_format($final_price_uah, 0, '.', ' ') . ' ₴</span>';
 
-                                                    if ($woo_sale_price > 0 && $woo_reg_price > 0) {
+                                                    if ($woo_sale_price > 0 && $woo_reg_price > $woo_sale_price) {
                                                         $old_price_uah = $woo_reg_price * $usd_rate;
                                                         echo '<span class="product-card__price-old">' . number_format($old_price_uah, 0, '.', ' ') . ' ₴</span>';
                                                     }
@@ -202,13 +206,14 @@ get_header(); ?>
 
                                         <div class="c-btn c-btn--filled product-card__btn">
                                             <span class="c-btn__icon">
-                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
                                                     <path d="M10 8L14 12L10 16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
                                                 </svg>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
+
 
                             </a>
                         </article>

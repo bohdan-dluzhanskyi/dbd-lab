@@ -54,17 +54,26 @@ function custom_loop_shop_per_page($cols)
 add_action('woocommerce_product_query', 'custom_woocommerce_product_filter', 99);
 function custom_woocommerce_product_filter(WP_Query $query)
 {
-	if (!is_admin() && isset($_GET['f_sub']) && !empty($_GET['f_sub'])) {
-		$query->set('tax_query', array(
-			array(
-				'taxonomy' => 'product_cat',
-				'field'    => 'slug',
-				'terms'    => array_map('sanitize_text_field', (array)$_GET['f_sub']),
-				'operator' => 'IN',
-			)
-		));
+	if (is_admin()) {
+		return;
+	}
+
+	if (!empty($_GET['f_search'])) {
+		$query->set('s', sanitize_text_field(wp_unslash($_GET['f_search'])));
+	}
+
+	if (isset($_GET['f_sub']) && !empty($_GET['f_sub'])) {
+		$tax_query = (array) $query->get('tax_query');
+		$tax_query[] = array(
+			'taxonomy' => 'product_cat',
+			'field'    => 'slug',
+			'terms'    => array_map('sanitize_text_field', (array) wp_unslash($_GET['f_sub'])),
+			'operator' => 'IN',
+		);
+		$query->set('tax_query', $tax_query);
 	}
 }
+
 
 
 add_filter('woocommerce_breadcrumb_defaults', 'custom_dynamic_polylang_breadcrumbs', 99);
@@ -150,7 +159,7 @@ function custom_intl_tel_validation(WPCF7_Validation $result, WPCF7_FormTag $tag
 
 		if (strpos($digits, '+380') === 0) {
 			if (! preg_match('/^\+380\d{9}$/', $digits)) {
-				$result->invalidate($tag, 'Введіть коректний український номер (9 цифр після +380).');
+				$result->invalidate($tag, '');
 			}
 		} elseif (! preg_match('/^\+?[1-9]\d{9,14}$/', $digits)) {
 			$result->invalidate($tag, 'Будь ласка, введіть коректний номер телефону.');
@@ -158,16 +167,13 @@ function custom_intl_tel_validation(WPCF7_Validation $result, WPCF7_FormTag $tag
 	}
 	return $result;
 }
-// Отключаем стили WooCommerce на главной странице
 function dbd_lab_disable_woo_assets()
 {
 	if (function_exists('is_woocommerce') && is_front_page()) {
-		// Стили
 		wp_dequeue_style('woocommerce-general');
 		wp_dequeue_style('woocommerce-layout');
 		wp_dequeue_style('woocommerce-smallscreen');
 
-		// Скрипты
 		wp_dequeue_script('wc-add-to-cart');
 		wp_dequeue_script('woocommerce');
 		wp_dequeue_script('wc-cart-fragments');
@@ -179,11 +185,9 @@ function dbd_lab_disable_woo_assets()
 }
 add_action('wp_enqueue_scripts', 'dbd_lab_disable_woo_assets', 99);
 
-// Отключаем wp-emoji
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
 
-// Отключаем jquery-migrate на фронтенде
 function dbd_lab_remove_jquery_migrate(WP_Scripts $scripts)
 {
 	if (! is_admin() && isset($scripts->registered['jquery'])) {

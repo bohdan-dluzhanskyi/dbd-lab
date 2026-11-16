@@ -26,7 +26,6 @@ get_header(); ?>
 
         ?>
 
-                <!-- 1. ХЛЕБНЫЕ КРОШКИ -->
                 <nav class="product-breadcrumbs">
                     <?php woocommerce_breadcrumb(array(
                         'delimiter'   => ' <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,17 +38,13 @@ get_header(); ?>
                     )); ?>
                 </nav>
 
-                <!-- 2. ГЛАВНЫЙ БЛОК ТОВАРА -->
                 <div class="product-main">
 
-                    <!-- Левая сторона: Вертикальные миниатюры + Главное фото -->
                     <div class="product-media">
                         <div class="product-gallery">
                             <?php
-                            // Получаем ID дополнительных картинок галереи товара
                             $attachment_ids = $product->get_gallery_image_ids();
 
-                            // Получаем ссылку на YouTube из ACF и извлекаем ID видео
                             $youtube_url = get_field('product_youtube_url');
                             $youtube_id = '';
                             if (!empty($youtube_url)) {
@@ -57,10 +52,8 @@ get_header(); ?>
                                 $youtube_id = !empty($match[1]) ? $match[1] : '';
                             }
 
-                            // Показываем левую колонку миниатюр, если есть доп. фото ИЛИ видео
                             if (!empty($attachment_ids) || !empty($youtube_id)) : ?>
                                 <div class="product-gallery__thumbs">
-                                    <!-- Первой миниатюрой выводим главное изображение -->
                                     <div class="thumb-item is-active" data-type="image" data-full="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'large')); ?>">
                                         <?php the_post_thumbnail('thumbnail'); ?>
                                     </div>
@@ -73,9 +66,8 @@ get_header(); ?>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
 
-                                    <!-- Миниатюра видео с YouTube (фирменная заглушка) -->
                                     <?php if (!empty($youtube_id)) : ?>
-                                        <div class="thumb-item thumb-item--video" data-type="video" data-youtube-id="<?php echo esc_attr($youtube_id); ?>" title="Дивитись відеоогляд">
+                                        <div class="thumb-item thumb-item--video" data-type="video" data-youtube-id="<?php echo esc_attr($youtube_id); ?>">
                                             <div class="thumb-video-stub">
                                                 <span class="thumb-video-icon" aria-hidden="true">
                                                     <svg width="14" height="16" viewBox="0 0 28 32" fill="none" xmlns="http://w3.org">
@@ -93,7 +85,6 @@ get_header(); ?>
 
                             <div class="product-gallery__main">
                                 <div class="main-image-wrap">
-                                    <!-- Кнопка Назад -->
                                     <button class="gallery-nav-btn gallery-nav-btn--prev" id="gallery-prev" aria-label="Previous image">
                                         <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://w3.org">
                                             <path d="M4.75 8.75L0.75 4.75L4.75 0.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
@@ -104,7 +95,6 @@ get_header(); ?>
                                     $main_img_url = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'full') : wc_placeholder_img_src();
                                     ?>
 
-                                    <!-- Контейнер для картинок -->
                                     <a href="<?php echo esc_url($main_img_url); ?>" data-fancybox="gallery" id="main-product-lightbox-link" class="main-image-link">
                                         <?php if (has_post_thumbnail()) : ?>
                                             <?php the_post_thumbnail('large', array('id' => 'main-product-img', 'loading' => 'eager', 'fetchpriority' => 'high')); ?>
@@ -113,10 +103,8 @@ get_header(); ?>
                                         <?php endif; ?>
                                     </a>
 
-                                    <!-- Контейнер для видео (скрыт по умолчанию, подгружается только при выборе) -->
                                     <div id="main-product-video-wrap" class="main-video-wrap" style="display: none;"></div>
 
-                                    <!-- Кнопка Вперед -->
                                     <button class="gallery-nav-btn gallery-nav-btn--next" id="gallery-next" aria-label="Next image">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
                                             <path d="M10 8L14 12L10 16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
@@ -128,7 +116,6 @@ get_header(); ?>
                         </div>
                     </div>
 
-                    <!-- Правая сторона: Информация о товаре -->
                     <div class="product-info">
 
                         <div class="product-info__category-wraper">
@@ -203,7 +190,7 @@ get_header(); ?>
                             </div>
 
                             <div class="product-info__price-box">
-                                <p class="price"><?php pll_e('Цінa:'); ?></p>
+                                <p class="price"><?php pll_e('Ціна:'); ?></p>
                                 <div class="price-meta">
                                     <span id="meta-currency-price"></span>
                                 </div>
@@ -217,7 +204,7 @@ get_header(); ?>
 
                         <?php else : ?>
                             <div class="product-info__price-box">
-                                <p class="price"><?php pll_e('Цінa:'); ?></p>
+                                <p class="price"><?php pll_e('Ціна:'); ?></p>
                                 <div class="price-meta">
                                     <span>
                                         <?php
@@ -240,7 +227,6 @@ get_header(); ?>
 
 
 
-                        <!-- Кнопка действия (открытие модалки) -->
                         <div class="product-info__actions">
                             <button class="c-btn c-btn--filled open-callback-modal" data-modal="order-proposal">
                                 <?php pll_e('Отримати комерційну пропозицію'); ?>
@@ -250,7 +236,6 @@ get_header(); ?>
 
                 </div>
 
-                <!-- 3. БЛОК ТЕХНИЧЕСКИХ ХАРАКТЕРИСТИК -->
                 <section class="product-details">
                     <h2 class="details-section-title"><?php pll_e('Технічні характеристики'); ?></h2>
                     <div class="details-grid">
@@ -288,12 +273,10 @@ get_header(); ?>
                 </section>
 
 
-                <!-- 4. БЛОК КОМПЛЕКТАЦИЯ / СФЕРА / ГАРАНТИЯ (Авто-парсер з Textarea) -->
                 <?php
                 $raw_features = get_field('prod_features_fast');
 
                 if (!empty($raw_features)) :
-                    // Розбиваємо весь текст на рядки
                     $lines = explode("\n", str_replace("\r", "", $raw_features));
 
                     $features_data = array();
@@ -303,12 +286,10 @@ get_header(); ?>
                         $line = trim($line);
                         if (empty($line)) continue;
 
-                        // Якщо рядок закінчується на двокрапку, це назва колонки (наприклад, Комплектація:)
                         if (substr($line, -1) === ':') {
                             $current_section = rtrim($line, ':');
                             $features_data[$current_section] = array();
                         } else if (!empty($current_section)) {
-                            // Очищаємо дефіси, плюси або зірочки на початку пунктів списку
                             $cleaned_item = ltrim($line, '-*+ ');
                             if (!empty($cleaned_item)) {
                                 $features_data[$current_section][] = $cleaned_item;
@@ -341,7 +322,6 @@ get_header(); ?>
 
 
 
-                <!-- 5. ОПЛАТА ЧАСТИНАМИ (ТОЛЬКО НА УКРАИНСКОЙ ВЕРСИИ САЙТА) -->
                 <?php
                 $current_lang = function_exists('pll_current_language') ? pll_current_language() : 'uk';
                 if ($current_lang === 'uk') :
@@ -365,12 +345,11 @@ get_header(); ?>
                     </section>
                 <?php endif; ?>
 
-                <!-- Блок CTA (Твой готовый БЭМ-компонент text-promo) -->
                 <section class="text-promo text-promo--bg-light-blue text-promo--has-padding">
                     <div class="text-promo__container">
                         <div class="text-promo__content">
-                            <h2 class="text-promo__title">Знайдемо рішення для вашого бізнесу</h2>
-                            <p class="text-promo__text">Допоможемо підібрати обладнання відповідно до запитань та надамо детальну інформацію щодо придбання.</p>
+                            <h2 class="text-promo__title"><?php pll_e('Знайдемо рішення для вашого бізнесу'); ?></h2>
+                            <p class="text-promo__text"><?php pll_e('Допоможемо підібрати обладнання, відповімо на запитання та надамо детальну інформацію щодо придбання.'); ?></p>
                             <div class="text-promo__buttons-wrap">
                                 <button class="c-btn c-btn--filled" data-modal="consultation"><?php pll_e('Отримати консультацію'); ?></button>
                             </div>

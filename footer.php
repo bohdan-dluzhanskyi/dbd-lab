@@ -101,16 +101,25 @@
 
 <div id="custom-modal-overlay" class="modal-overlay">
     <div class="modal-content-container">
-        <button class="modal-close-x" id="modal-close-x" aria-label="Закрити модальне вікно">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <button class="modal-close-x" id="modal-close-x" aria-label="<?php echo esc_attr(function_exists('pll__') ? pll__('Закрити модальне вікно') : 'Закрити модальне вікно'); ?>">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
                 <path d="M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#00C4C4" />
             </svg>
         </button>
 
-        <?php echo do_shortcode('[contact-form-7 id="9f82a04" title="modal-uk"]'); ?>
+        <?php
+        $current_lang = function_exists('pll_current_language') ? pll_current_language() : 'uk';
+
+        if ($current_lang === 'en') {
+            echo do_shortcode('[contact-form-7 id="c2bcaad" title="modal-en"]');
+        } elseif ($current_lang === 'ru') {
+            echo do_shortcode('[contact-form-7 id="0a92678" title="modal-ru"]');
+        } else {
+            echo do_shortcode('[contact-form-7 id="9f82a04" title="modal-uk"]');
+        }
+        ?>
     </div>
 </div>
-
 <div class="fixed-widget" id="fixed-connect-widget">
 
     <div class="fixed-widget__modal" id="widget-modal-window">

@@ -54,8 +54,7 @@
                 <?php endif; ?>
             </div>
 
-            <!-- Логотип выносим отдельно, чтобы на мобилке он всегда стоял строго по центру -->
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="header-logo mobile-only-logo" aria-label="DBD Cosmo Lab — На главную">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="header-logo mobile-only-logo" aria-label="<?php pll_e('На головну'); ?>">
                 <?php
                 $svg_path = get_theme_file_path('/assets/images/logo.svg');
                 if (file_exists($svg_path)) {
@@ -64,7 +63,6 @@
                 ?>
             </a>
 
-            <!-- Правая зона / Выпадающий дровер на мобильных -->
             <div class="header-right-zone" id="mobileDrawer">
                 <nav class="header-navigation-wrapper">
                     <?php
@@ -95,7 +93,6 @@
                     ?>
                 </nav>
 
-                <!-- Клонируем соцсети для низа мобильного меню (скрыты на десктопе) -->
                 <div class="mobile-drawer-socials">
                     <?php if (! empty($telegram_url)) : ?>
                         <a href="<?php echo esc_url($telegram_url); ?>" class="social-link tg" target="_blank" rel="nofollow" aria-label="Telegram">
